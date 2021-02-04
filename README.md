@@ -21,13 +21,13 @@
 
 | Column          | Type       | Options                          |
 | --------------- | ---------- | -------------------------------- |
-| name            | string     | null: false                      |
+| name            | text       | null: false                      |
 | description     | text       | null: false                      |
-| category        | text       | null: false                      |
-| condition       | text       | null: false                      |
-| shipping_charge | text       | null: false                      |
-| region          | text       | null: false                      |
-| delivery_dates  | text       | null: false                      |
+| category        | string     | null: false                      |
+| condition       | string     | null: false                      |
+| shipping_charge | string     | null: false                      |
+| region          | string     | null: false                      |
+| delivery_dates  | string     | null: false                      |
 | price           | integer    | null: false                      |
 | user_id         | references | null: false, foreign_key: true   |
 
@@ -63,6 +63,7 @@
 | street_number | string     | null: false                    |
 | building      | string     |                                |
 | phone_number  | integer    | null: false                    |
+| order-id      | references | null: false, foreign_key: true |
 
 ### Association
 
