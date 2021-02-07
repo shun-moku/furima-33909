@@ -54,25 +54,67 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("Password is too short (minimum is 6 characters)")
       end
+      it "passwordが英語のみでは登録できない" do
+        @user.password = "aaaaaa"
+        @user.password_confirmation = "aaaaaa"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password には英字と数字の両方を含めて設定してください")
+      end
+      it "passwordが数字のみでは登録できない" do
+        @user.password = "000000"
+        @user.password_confirmation = "000000"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password には英字と数字の両方を含めて設定してください")
+      end
+      it "passwordが全角登では録できない" do
+        @user.password = "パスワーード"
+        @user.password_confirmation = "パスワーード"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password には英字と数字の両方を含めて設定してください")
+      end
+
       it "family_kanjiが空では登録できない" do
         @user.family_kanji = ''
         @user.valid?
         expect(@user.errors.full_messages).to include("Family kanji can't be blank")
+      end
+
+      it "family_kanjiは、漢字・平仮名・カタカナ以外では登録できない" do
+        @user.family_kanji = 'yamada'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Family kanji 全角文字を使用してください")
       end
       it "first_kanjiが空では登録できない" do
         @user.first_kanji = ''
         @user.valid?
         expect(@user.errors.full_messages).to include("First kanji can't be blank")
       end
+      it "first_kanjiは、漢字・平仮名・カタカナ以外では登録できない" do
+        @user.first_kanji = 'taro'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("First kanji 全角文字を使用してください")
+      end
       it "family_kanaが空では登録できない" do
         @user.family_kana = ''
         @user.valid?
         expect(@user.errors.full_messages).to include("Family kana can't be blank")
       end
+      it "family_kanaがカタカナ以外では登録できない" do
+        @user.family_kana = 'やまだ'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Family kana 全角カタカナを使用してください")
+      end
+
       it "first_kanaが空では登録できない" do
         @user.first_kana = ''
         @user.valid?
         expect(@user.errors.full_messages).to include("First kana can't be blank")
+      end
+      it "first_kanaがカタカナ以外では登録できない" do
+        @user.first_kana = 'たろう'
+        @user.valid?
+        binding.pry
+        expect(@user.errors.full_messages).to include("First kana 全角カタカナを使用してください")
       end
       it "birthdayが空では登録できない" do
         @user.birthday = ''
