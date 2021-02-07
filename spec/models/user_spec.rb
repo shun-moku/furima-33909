@@ -113,7 +113,6 @@ RSpec.describe User, type: :model do
       it "first_kanaがカタカナ以外では登録できない" do
         @user.first_kana = 'たろう'
         @user.valid?
-        binding.pry
         expect(@user.errors.full_messages).to include("First kana 全角カタカナを使用してください")
       end
       it "birthdayが空では登録できない" do
