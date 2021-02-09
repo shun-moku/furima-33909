@@ -30,5 +30,4 @@ class Item < ApplicationRecord
     validates :region_id
     validates :delivery_date_id
   end
-
 end
