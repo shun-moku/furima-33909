@@ -7,17 +7,19 @@ class Item < ApplicationRecord
   belongs_to :region
   belongs_to :delivery_date
 
-
-  validates :name,                presence: true
-  validates :description,         presence: true
-  validates :category_id,         presence: true
-  validates :condition_id,        presence: true
-  validates :shipping_charge_id,  presence: true
-  validates :region_id,           presence: true
-  validates :delivery_date_id,    presence: true
-  validates :price,               presence: true
+  with_options presence: true do
+    validates :name             
+    validates :description      
+    validates :category_id      
+    validates :condition_id     
+    validates :shipping_charge_id
+    validates :region_id        
+    validates :delivery_date_id 
+    validates :price            
+    validates :image           
+  end
+  
   validates :price,               numericality: { only_integer: true, greater_than: 300, less_than: 9999999}
-  validates :image,               presence: true
 
   belongs_to :user
   has_one_attached :image
