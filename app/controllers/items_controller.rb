@@ -39,7 +39,6 @@ class ItemsController < ApplicationController
     redirect_to root_path
   end
 
-
   private
 
   def item_params
@@ -48,14 +47,10 @@ class ItemsController < ApplicationController
   end
 
   def move_to_index
-    unless current_user.id == @item.user.id
-      redirect_to action: :index
-    end
+    redirect_to action: :index unless current_user.id == @item.user.id
   end
-
 
   def set_item
     @item = Item.find(params[:id])
   end
-
 end
