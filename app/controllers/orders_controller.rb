@@ -5,12 +5,10 @@ class OrdersController < ApplicationController
   before_action :move_to_index_for_soldout, only: [:index, :edit]
   def index
     @order_address = OrderAddress.new
-    # @item = Item.find(params[:item_id])
   end
 
   def create
     @order_address = OrderAddress.new(order_params)
-    # @item = Item.find(params[:item_id])
     if @order_address.valid?
       pay_item
       @order_address.save
@@ -23,7 +21,6 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    # params.permit(:price).merge(user_id: current_user.id)
     params.require(:order_address).permit(:zip_code, :region_id, :city, :street_number, :building, :phone_number).merge(
       user_id: current_user.id, item_id: params[:item_id], token: params[:token]
     )
@@ -43,7 +40,6 @@ class OrdersController < ApplicationController
   end
 
   def move_to_index_for_seller
-    # @item = Item.find(params[:item_id])
     redirect_to root_path if current_user.id == @item.user.id
   end
 
