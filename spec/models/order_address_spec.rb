@@ -36,13 +36,12 @@ RSpec.describe OrderAddress, type: :model do
       expect(@order_address.errors.full_messages).to include( "Street number can't be blank" )
     end
     it 'buildingは空でも保存できること' do
-      @donation_address.building = ''
-      expect(@donation_address).to be_valid
+      @order_address.building = ''
+      expect(@order_address).to be_valid
     end
     it 'phone_numberが空だと保存できないこと' do
       @order_address.phone_number = ""
       @order_address.valid?
-      binding.pry
       expect(@order_address.errors.full_messages).to include( "Phone number can't be blank" )
     end
     it "tokenが空では登録できないこと" do
