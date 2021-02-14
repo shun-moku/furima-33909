@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_user!, only:[:index]
-  before_action :set_order, only:[:index,:create]
+  before_action :authenticate_user!, only: [:index]
+  before_action :set_order, only: [:index, :create]
   before_action :move_to_index_for_seller, only: :index
   before_action :move_to_index_for_soldout, only: [:index, :edit]
   def index
@@ -24,15 +24,17 @@ class OrdersController < ApplicationController
 
   def order_params
     # params.permit(:price).merge(user_id: current_user.id)
-    params.require(:order_address).permit(:zip_code, :region_id, :city, :street_number, :building, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
+    params.require(:order_address).permit(:zip_code, :region_id, :city, :street_number, :building, :phone_number).merge(
+      user_id: current_user.id, item_id: params[:item_id], token: params[:token]
+    )
   end
 
   def pay_item
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]  # 自身のPAY.JPテスト秘密鍵を記述しましょう
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY'] # 自身のPAY.JPテスト秘密鍵を記述しましょう
     Payjp::Charge.create(
       amount: @item.price,
-      card: order_params[:token],    # カードトークン
-      currency: 'jpy'                 # 通貨の種類（日本円）
+      card: order_params[:token], # カードトークン
+      currency: 'jpy' # 通貨の種類（日本円）
     )
   end
 
@@ -40,16 +42,12 @@ class OrdersController < ApplicationController
     @item = Item.find(params[:item_id])
   end
 
-
   def move_to_index_for_seller
     # @item = Item.find(params[:item_id])
     redirect_to root_path if current_user.id == @item.user.id
   end
 
   def move_to_index_for_soldout
-    redirect_to root_path if @item.order != nil
+    redirect_to root_path unless @item.order.nil?
   end
-
-
-
 end

@@ -23,32 +23,31 @@ RSpec.describe OrderAddress, type: :model do
     it 'region_idを選択していないと保存できないこと' do
       @order_address.region_id = 1
       @order_address.valid?
-      expect(@order_address.errors.full_messages).to include()
+      expect(@order_address.errors.full_messages).to include
     end
     it 'cityga空だと保存できないこと' do
-      @order_address.city = ""
+      @order_address.city = ''
       @order_address.valid?
-      expect(@order_address.errors.full_messages).to include( "City can't be blank" )
+      expect(@order_address.errors.full_messages).to include("City can't be blank")
     end
     it 'street_numberが空では保存できないこと' do
-      @order_address.street_number = ""
+      @order_address.street_number = ''
       @order_address.valid?
-      expect(@order_address.errors.full_messages).to include( "Street number can't be blank" )
+      expect(@order_address.errors.full_messages).to include("Street number can't be blank")
     end
     it 'buildingは空でも保存できること' do
       @order_address.building = ''
       expect(@order_address).to be_valid
     end
     it 'phone_numberが空だと保存できないこと' do
-      @order_address.phone_number = ""
+      @order_address.phone_number = ''
       @order_address.valid?
-      expect(@order_address.errors.full_messages).to include( "Phone number can't be blank" )
+      expect(@order_address.errors.full_messages).to include("Phone number can't be blank")
     end
-    it "tokenが空では登録できないこと" do
+    it 'tokenが空では登録できないこと' do
       @order_address.token = nil
       @order_address.valid?
       expect(@order_address.errors.full_messages).to include("Token can't be blank")
     end
-
   end
 end
